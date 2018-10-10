@@ -1,0 +1,19 @@
+<div>
+  <label>Article title:
+    <input #ArticleName />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input 
+  <button (click)="add(heroName.value); heroName.value=''">
+    add
+  </button>-->
+</div>
+
+<ul class="articles">
+  <li *ngFor="let hero of heroes">
+    <a routerLink="/{{article.id}}">
+      <span class="badge">{{article.id}}</span> {{article.name}}
+    </a>
+    
+<div>
+	<button id="create-article-button" (click)="newarticlebut()">Create a New Article!</button>
+</div>

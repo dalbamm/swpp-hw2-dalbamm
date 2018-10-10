@@ -1,0 +1,18 @@
+<div>
+  
+  <!-- (click) passes input value to add() and then clears the input 
+  <button (click)="add(heroName.value); heroName.value=''">
+    add
+  </button>-->
+</div>
+
+<ul class="articles">
+  <li *ngFor="let article of articles">article id: {{article.id}} / 
+    <button  routerLink="/articles/{{article.id}}">
+      title: {{article.title}}    </button> / author: {{article.author_id}}
+
+  </li>
+   <br><br> 
+<div>
+	<button id="create-article-button" routerLink="/articles/create">Create a New Article!</button>
+</div>
