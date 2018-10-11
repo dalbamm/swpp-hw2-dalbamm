@@ -11,23 +11,49 @@ import { BlogdataService } from'../blogdata.service'
 export class ArticlesPageComponent implements OnInit {
 	articles: Article[]
 	users: User[]
+	myObserver = {
+		next:x =>console.log('observer got a next value: '+ x )
+	};
   constructor(private blogdataService: BlogdataService) {}
 	
   ngOnInit() {
+    //this.getAll();
 	  this.getArticles();
 	  this.getUsers();
-	  this.mapid2name();	
   }
+  
   newarticlebut(){
   	console.log("hello~!")
   }
+  
+  getAll(): void{	
+   this.blogdataService.getArticles().subscribe(articles => this.articles = articles)
+   this.blogdataService.getUsers().subscribe(a => this.users = a)
+   for(var i = 0 ; i < this.articles.length; i++){
+		this.articles[i].author_name = this.users.find(x => x.id === this.articles[i].author_id).name
+   }
+  }
+
   getArticles(): void{
+	  
+   this.blogdataService.getArticles().subscribe(articles => this.articles = articles,
+		   
+		   );
+//   this.blogdataService.getArticles().subscribe(this.myObserver);
+  }
+  getArticleAuthor(): void{
    this.blogdataService.getArticles().subscribe(articles => this.articles = articles);
   }
+/* getUserId(id:number): void{
+   this.blogdataService.getUserId(id).subscribe(this.myObserver);
+  }
+  findUser = users.find(user => user.id === id)
+ */
+
   getUsers(): void{
   	this.blogdataService.getUsers().subscribe(users => this.users = users);
   }
-  mapid2name(): void{
+/*    mapid2name(): void{
 	  console.log("hi");
   	for(var i = 0 ; i < this.articles.length; i++){
 		this.articles[i].author_name = this.getonlyuser(this.articles[i].author_id);
@@ -39,5 +65,5 @@ export class ArticlesPageComponent implements OnInit {
 		if(id == tmp.id)	return tmp.name;
 	  }
 	  return "";
-  }
+  }*/
 }

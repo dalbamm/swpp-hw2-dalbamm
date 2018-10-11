@@ -15,6 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class BlogdataService {
+  private userUrl = 'api/user';  // URL to web api
   private useridUrl = 'api/user/:id';  // URL to web api
   private articlesUrl = 'api/articles';  // URL to web api
   private articlesidUrl = 'api/articles/:id';  // URL to web api
@@ -23,7 +24,14 @@ export class BlogdataService {
 
   constructor(private http: HttpClient, private messageService: MessageService) {  }
 
-  getArticles (): Observable<Article[]> {
+  getAll (): Observable<Article[]> {//articlesUrl
+    ​    return this.http.get<Article[]>(this.articlesUrl)
+    ​      .pipe(
+    ​        tap(articles => this.log('fetched articles')),
+    ​        catchError(this.handleError('getArticles', []))
+    ​      );
+      }
+  getArticles (): Observable<Article[]> {//articlesUrl
 ​    return this.http.get<Article[]>(this.articlesUrl)
 ​      .pipe(
 ​        tap(articles => this.log('fetched articles')),
@@ -44,7 +52,7 @@ export class BlogdataService {
   }
 
   /** GET hero by id. Will 404 if id not found */
-  getArticle(id: number): Observable<Article> {
+  getArticle(id: number): Observable<Article> { //articles/:id
 ​    const url = `${this.articlesUrl}/${id}`;
 ​    return this.http.get<Article>(url).pipe(
 ​      tap(_ => this.log(`fetched article id=${id}`)),
@@ -63,11 +71,37 @@ export class BlogdataService {
 ​      catchError(this.handleError<Article[]>('searchArticles', []))
 ​    );
   }
-  getUsers (): Observable<User[]> {
-​    return this.http.get<User[]>(this.useridUrl)
+  
+  getUsers (): Observable<User[]> {//useridUrl
+​    return this.http.get<User[]>(this.userUrl)
 ​      .pipe(
 ​        tap(users => this.log('fetched users')),
 ​        catchError(this.handleError('getUsers', []))
+​      );
+  }
+  getUserId(id: number): Observable<User> { //articles/:id
+​    const url = `${this.userUrl}/${id}`;
+​    return this.http.get<User>(url).pipe(
+​      tap(_ => this.log(`fetched user id=${id}`)),
+​      catchError(this.handleError<User>(`getUserId=${id}`))
+​    );
+  }
+
+
+  getComments (): Observable<Comment[]> {
+​    return this.http.get<Comment[]>(this.commentsUrl)
+​      .pipe(
+​        tap(commentes => this.log('fetched comments')),
+​        catchError(this.handleError('getComments', []))
+​      );
+  }
+ 
+  getCommentsId (id: number): Observable<Comment[]> {
+​    const url = `${this.commentsUrl}/${id}`;
+​    return this.http.get<Comment[]>(url)
+​      .pipe(
+​        tap(commentesid => this.log('fetched commentsid')),
+​        catchError(this.handleError('getCommentsId', []))
 ​      );
   }
 

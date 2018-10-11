@@ -11,7 +11,7 @@ const routes: Routes = [
 { path:'sign_in', component: SigninComponent },
 { path:'articles', component: ArticlesPageComponent },
 { path: 'articles/create', component: ArticleCreatePageComponent },
-{ path: 'articles/:id', component: ArticleDetailComponentComponent }
+{ path: 'articles/:id', component: ArticleDetailComponentComponent },
 { path: 'articles/:id/edit', component: ArticleEditPageComponent }
 ]
 

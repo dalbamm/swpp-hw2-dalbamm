@@ -1,10 +1,19 @@
-<h1 id="article-author">author: {{article.author_id}}</h1><br>
-<h1 id="article-title">title: {{article.title}}</h1><br>
-<p id="article-content">content: {{article.content}}</p><br>Comment: 
+<ul class="article">
+<h1 id="article-author">author: {{article?.author_id}}</h1><br>
+<h1 id="article-title">title: {{article?.title}}</h1><br>
+<p id="article-content">content: {{article?.content}}</p><br>Comment: 
 <input id="new-comment-content-input"><br>
 <button id="confirm-create-comment-button">create comment</button><br>
 <button id="edit-comment-button">edit comment</button><br>
 <button id="delete-comment-button">delete comment</button><br>
-<button id="edit-article-button">edit article</button><br>
-<button id="delete-article-button">delete article</button><br>
-<button id="back-detail-article-button">back</button><br>
+<button id="edit-article-button" routerLink = "/articles/{{article?.id}}/edit">edit article</button><br>
+<button id="delete-article-button" routerLink = "/articles/">delete article</button><br>
+<!-- ^- article 지우기-->
+<button id="back-detail-article-button" routerLink = "/articles/">back</button><br>
+</ul>
+<ul class="comments">
+    <li *ngFor="let comment of comments">comment id: {{comment?.id}} / 
+      <label routerLink="/articles/{{article.id}}/comments/{{comment.id}}">
+        Comment: {{comment?.content}}    </label> / author: {{comment?.author_id}}<!--"getUserId(article.author_id)"	  -->
+    </li>
+  </ul>
