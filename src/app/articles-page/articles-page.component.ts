@@ -22,9 +22,9 @@ export class ArticlesPageComponent implements OnInit {
   ngOnInit() {
     //this.getAll();
     if(this.blogdataService.getLoginUser() === null)  this.router.navigateByUrl("/")
-    this.getArticles();
+    //this.getArticles();
     this.getUsers();
-    
+    this.articles = this.blogdataService.getNewArticles();
   }
   
   newarticlebut(){

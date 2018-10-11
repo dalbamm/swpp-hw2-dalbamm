@@ -1,5 +1,5 @@
 <ul class="article">
-<h1 id="article-author">author: {{article?.author_id}}</h1><br>
+<h1 id="article-author">author: {{article?.author_name}}</h1><br>
 <h1 id="article-title">title: {{article?.title}}</h1><br>
 <p id="article-content">content: {{article?.content}}</p><br>Comment: 
 <input id="new-comment-content-input"><br>
@@ -14,6 +14,6 @@
 <ul class="comments">
     <li *ngFor="let comment of comments">comment id: {{comment?.id}} / 
       <label >
-        Comment: {{comment?.content}}    </label> / author: {{comment?.author_id}}<!--"getUserId(article.author_id)"	  -->
+        Comment: {{comment?.content}}    </label> / author: {{comment?.author_name}}<!--"getUserId(article.author_id)"	  -->
     </li>
   </ul>

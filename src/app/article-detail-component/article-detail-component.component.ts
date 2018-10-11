@@ -5,6 +5,7 @@ import { BlogdataService } from '../blogdata.service';
 import { Article } from '../Article';
 import { Comment } from '../Comment';
 import { RouterModule, Routes, Router } from '@angular/router';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -24,19 +25,24 @@ export class ArticleDetailComponentComponent implements OnInit {
   ngOnInit() {
     if(this.blogdataService.getLoginUser() === null)  this.router.navigateByUrl("/")
   	this.getArticle();
-  	this.getComments();
+    this.getComments();
+//    this.blogdataService.getNewArticles();
+//    this.blogdataService.getNewComments();
   }
 
   getArticle(): void {
 	const id = +this.route.snapshot.paramMap.get('id');
-  	this.blogdataService.getArticle(id).subscribe(article => this.article = article);
+  of(this.blogdataService.getNewArticles()).subscribe(a =>this.article =  a.find(ele => ele.id === id));
+  //this.blogdataService.getArticle(id).subscribe(article => this.article = article);
   }
   getComments(): void {
     //const id = +this.route.snapshot.paramMap.get('id');
-      this.blogdataService.getComments().subscribe(comments => this.comments = comments.filter(
+    of(this.blogdataService.getNewComments()).subscribe(a=>this.comments = a.filter(
+      comment => comment.article_id === this.article.id ));
+    /*  this.blogdataService.getComments().subscribe(comments => this.comments = comments.filter(
         comment => comment.article_id === this.article.id )
         );
-
+*/
     }
 }
 

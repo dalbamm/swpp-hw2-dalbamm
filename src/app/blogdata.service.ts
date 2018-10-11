@@ -22,8 +22,25 @@ export class BlogdataService {
   private commentsUrl = 'api/comments';  // URL to web api
   private commentsidUrl = 'api/comments/:id';  // URL to web api
   private currentloginuser : User  = null
-  constructor(private http: HttpClient, private messageService: MessageService) {  }
-
+  private newArticles : Article[]
+  private newComments : Comment[]
+  constructor(private http: HttpClient, private messageService: MessageService) { 
+    this.getArticles().subscribe(a => this.newArticles = (a.filter(elem => this.authorName(elem))))
+    this.getComments().subscribe(a => this.newComments = (a.filter(elem => this.authorName(elem))))
+  }
+  
+  getNewArticles(): Article[]{
+    this.getArticles().subscribe(a => this.newArticles = (a.filter(elem => this.authorName(elem))))
+    return this.newArticles;
+  }
+  getNewComments(): Comment[]{
+    this.getComments().subscribe(a => this.newComments = (a.filter(elem => this.authorName(elem))))
+    return this.newComments;
+  }
+  authorName(art: Article | Comment): boolean{
+     this.getUsers().subscribe(a => (art.author_name = (a.find(b => b.id === art.author_id).name)));
+     return true;
+  }
   getLoginUser(): User {
     return this.currentloginuser
   }

@@ -3,4 +3,5 @@ export class Comment {
 	article_id: number;
 	author_id: number;
 	content: string;
+	author_name?: string;
 }
