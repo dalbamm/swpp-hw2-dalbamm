@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Article } from'../Article'
 import { User } from'../User'
 import { BlogdataService } from'../blogdata.service'
+import { RouterModule, Routes, Router } from '@angular/router';
 
 @Component({
   selector: 'app-articles-page',
@@ -14,12 +15,16 @@ export class ArticlesPageComponent implements OnInit {
 	myObserver = {
 		next:x =>console.log('observer got a next value: '+ x )
 	};
-  constructor(private blogdataService: BlogdataService) {}
+  constructor(private blogdataService: BlogdataService,
+    private router: Router
+    ) {}
 	
   ngOnInit() {
     //this.getAll();
-	  this.getArticles();
-	  this.getUsers();
+    if(this.blogdataService.getLoginUser() === null)  this.router.navigateByUrl("/")
+    this.getArticles();
+    this.getUsers();
+    
   }
   
   newarticlebut(){

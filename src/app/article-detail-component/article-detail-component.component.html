@@ -13,7 +13,7 @@
 </ul>
 <ul class="comments">
     <li *ngFor="let comment of comments">comment id: {{comment?.id}} / 
-      <label routerLink="/articles/{{article.id}}/comments/{{comment.id}}">
+      <label >
         Comment: {{comment?.content}}    </label> / author: {{comment?.author_id}}<!--"getUserId(article.author_id)"	  -->
     </li>
   </ul>

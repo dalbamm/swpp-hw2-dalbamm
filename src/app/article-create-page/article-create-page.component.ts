@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Article } from'../Article'
+import { User } from'../User'
+import { BlogdataService } from'../blogdata.service'
+import { RouterModule, Routes, Router } from '@angular/router';
 
 @Component({
   selector: 'app-article-create-page',
@@ -7,8 +11,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArticleCreatePageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private blogdataService: BlogdataService,
+    private router: Router) { }
   ngOnInit() {
+    if(this.blogdataService.getLoginUser() === null)  this.router.navigateByUrl("/")
+    
   }
 
 }

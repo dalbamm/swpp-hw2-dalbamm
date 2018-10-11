@@ -21,9 +21,20 @@ export class BlogdataService {
   private articlesidUrl = 'api/articles/:id';  // URL to web api
   private commentsUrl = 'api/comments';  // URL to web api
   private commentsidUrl = 'api/comments/:id';  // URL to web api
-
+  private currentloginuser : User  = null
   constructor(private http: HttpClient, private messageService: MessageService) {  }
 
+  getLoginUser(): User {
+    return this.currentloginuser
+  }
+  setLogout(){
+    this.updateSign(this.currentloginuser,false).subscribe(a=>a)
+    this.currentloginuser=null
+  }
+  setLoginUser(user: User){
+    this.currentloginuser = user;
+    this.updateSign(this.currentloginuser,true).subscribe(a=>a)
+  }
   getAll (): Observable<Article[]> {//articlesUrl
     ​    return this.http.get<Article[]>(this.articlesUrl)
     ​      .pipe(
@@ -105,6 +116,68 @@ export class BlogdataService {
 ​      );
   }
 
+  addArticle (article: Article): Observable<Article> {
+    return this.http.post<Article>(this.articlesUrl, article, httpOptions).pipe(
+      tap((article: Article) => this.log(`added article w/ id=${article.id}`)),
+      catchError(this.handleError<Article>('addArticle'))
+    );
+  }
+
+  addComment (comment: Comment): Observable<Comment> {
+    return this.http.post<Comment>(this.commentsUrl, comment, httpOptions).pipe(
+      tap((comment: Comment) => this.log(`added comment w/ id=${comment.id}`)),
+      catchError(this.handleError<Comment>('addComment'))
+    );
+  }
+
+  updateSign (user: User, what: boolean): Observable<any> {
+    user.signed_in=what;
+    let userarr = this.getUserId
+    return this.http.put(this.userUrl + "/" + user.id, user, httpOptions).pipe(
+      tap(_ => this.log(`updated user id=${user.id}`)),
+      catchError(this.handleError<any>('updateUser'))
+    );
+  }
+  
+  updateArticle (article: Article): Observable<any> {
+    return this.http.put(this.articlesidUrl, article, httpOptions).pipe(
+      tap(_ => this.log(`updated article id=${article.id}`)),
+      catchError(this.handleError<any>('update article'))
+    );
+  }
+
+
+  updateComment (comment: Comment): Observable<any> {
+    return this.http.put(this.commentsidUrl, comment, httpOptions).pipe(
+      tap(_ => this.log(`updated comment id=${comment.id}`)),
+      catchError(this.handleError<any>('update comment'))
+    );
+  }
+
+
+
+
+
+
+  deleteArticle (article: Article | number): Observable<Article> {
+    const id = typeof article === 'number' ? article : article.id;
+    const url = `${this.articlesUrl}/${id}`;
+
+    return this.http.delete<Article>(url, httpOptions).pipe(
+      tap(_ => this.log(`deleted article id=${id}`)),
+      catchError(this.handleError<Article>('deleteArticle'))
+    );
+  }
+  deleteComment (comment: Comment | number): Observable<Comment> {
+    const id = typeof comment === 'number' ? comment : comment.id;
+    const url = `${this.commentsUrl}/${id}`;
+
+    return this.http.delete<Comment>(url, httpOptions).pipe(
+      tap(_ => this.log(`deleted comment id=${id}`)),
+      catchError(this.handleError<Comment>('deleteComment'))
+    );
+  }
+
 private handleError<T> (operation = 'operation', result?: T) {
 
 ​    return (error: any): Observable<T> => {
@@ -143,5 +216,31 @@ Use of this source code is governed by an MIT-style license that
 can be found in the LICENSE file at http://angular.io/license
 */
 
+  /** POST: add a new hero to the server */
+/*  addHero (hero: Hero): Observable<Hero> {
+    return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
+      tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
+      catchError(this.handleError<Hero>('addHero'))
+    );
+  }
+*/
+  /** DELETE: delete the hero from the server */
+/*  deleteHero (hero: Hero | number): Observable<Hero> {
+    const id = typeof hero === 'number' ? hero : hero.id;
+    const url = `${this.heroesUrl}/${id}`;
 
+    return this.http.delete<Hero>(url, httpOptions).pipe(
+      tap(_ => this.log(`deleted hero id=${id}`)),
+      catchError(this.handleError<Hero>('deleteHero'))
+    );
+  }
+*/
+  /** PUT: update the hero on the server */
+/*  updateHero (hero: Hero): Observable<any> {
+    return this.http.put(this.heroesUrl, hero, httpOptions).pipe(
+      tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updateHero'))
+    );
+  }
 
+*/

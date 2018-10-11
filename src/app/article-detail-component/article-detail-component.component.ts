@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 import { BlogdataService } from '../blogdata.service';
 import { Article } from '../Article';
 import { Comment } from '../Comment';
+import { RouterModule, Routes, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-article-detail-component',
@@ -15,10 +17,12 @@ export class ArticleDetailComponentComponent implements OnInit {
   private comments : Comment[]
   constructor(
 		  private route: ActivatedRoute,
+		  private router: Router,
       private blogdataService: BlogdataService
 		  ) { }
 
   ngOnInit() {
+    if(this.blogdataService.getLoginUser() === null)  this.router.navigateByUrl("/")
   	this.getArticle();
   	this.getComments();
   }
