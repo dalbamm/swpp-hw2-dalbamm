@@ -1,19 +1,20 @@
 <ul class="article">
 <h1 id="article-author">author: {{article?.author_name}}</h1><br>
 <h1 id="article-title">title: {{article?.title}}</h1><br>
-<p id="article-content">content: {{article?.content}}</p><br>Comment: 
-<input id="new-comment-content-input"><br>
-<button id="confirm-create-comment-button">create comment</button><br>
-<button id="edit-comment-button">edit comment</button><br>
-<button id="delete-comment-button">delete comment</button><br>
-<button id="edit-article-button" routerLink = "/articles/{{article?.id}}/edit">edit article</button><br>
-<button id="delete-article-button" routerLink = "/articles/">delete article</button><br>
-<!-- ^- article 지우기-->
-<button id="back-detail-article-button" routerLink = "/articles/">back</button><br>
+<p id="article-content">content: {{article?.content}}</p>
+<button *ngIf = "LOGONUSER?.id===article?.author_id" id="edit-article-button" routerLink = "/articles/{{article?.id}}/edit">edit article</button>
+<button *ngIf = "LOGONUSER?.id===article?.author_id" id="delete-article-button" routerLink = "/articles/">delete article</button><br><br>
+
+Comment: 
+<input [(ngModel)] = "newCommentContent" id="new-comment-content-input">
+
 </ul>
 <ul class="comments">
+    <button id="confirm-create-comment-button" (click)="createComment()">create comment</button>
+    <button id="back-detail-article-button" routerLink = "/articles/">back</button><br><br>
     <li *ngFor="let comment of comments">comment id: {{comment?.id}} / 
       <label >
-        Comment: {{comment?.content}}    </label> / author: {{comment?.author_name}}<!--"getUserId(article.author_id)"	  -->
+        Comment: {{comment?.content}}    </label> / author: {{comment?.author_name}}
+  <button *ngIf = "LOGONUSER.id===comment?.author_id" id="edit-comment-button" (click)="editComment(comment?.id)">edit comment</button><button *ngIf = "LOGONUSER.id===comment?.author_id" id="delete-comment-button">delete comment</button><br>
     </li>
   </ul>

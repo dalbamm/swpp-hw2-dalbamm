@@ -25,6 +25,7 @@ import { ArticleCreatePageComponent } from './article-create-page/article-create
     ArticleCreatePageComponent
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(

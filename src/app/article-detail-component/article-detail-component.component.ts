@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { BlogdataService } from '../blogdata.service';
 import { Article } from '../Article';
+import { User } from '../User';
 import { Comment } from '../Comment';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -16,6 +17,9 @@ import { of } from 'rxjs';
 export class ArticleDetailComponentComponent implements OnInit {
    article : Article
   private comments : Comment[]
+  private LOGONUSER : User
+  private newCommentContent: string =""
+  private numComments : number
   constructor(
 		  private route: ActivatedRoute,
 		  private router: Router,
@@ -24,8 +28,10 @@ export class ArticleDetailComponentComponent implements OnInit {
 
   ngOnInit() {
     if(this.blogdataService.getLoginUser() === null)  this.router.navigateByUrl("/")
+    this.LOGONUSER = this.blogdataService.getLoginUser()
   	this.getArticle();
     this.getComments();
+    this.numComments = this.blogdataService.getNumComments()
 //    this.blogdataService.getNewArticles();
 //    this.blogdataService.getNewComments();
   }
@@ -44,5 +50,38 @@ export class ArticleDetailComponentComponent implements OnInit {
         );
 */
     }
+  createComment(): void{
+//    console.log(this.newCommentContent);
+    let tmpComment :Comment = new Comment()
+    tmpComment.id = this.numComments
+    tmpComment.article_id = this.article.id
+    tmpComment.author_id = this.article.author_id
+    tmpComment.content = this.newCommentContent
+    tmpComment.author_name = this.LOGONUSER.name
+    console.log(tmpComment)
+    this.blogdataService.addComment(tmpComment).subscribe(a=>a)
+    this.comments = this.comments
+    //this.comments = null
+    this.blogdataService.getNewComments()
+    console.log(this.blogdataService.getCommentsId(tmpComment.id))
+    this.numComments += 1
+    this.getComments();
+    
+  }
+  editComment(comment :  Comment): void{
+    let tmpComment :Comment = new Comment()
+    tmpComment.id = this.numComments
+    tmpComment.article_id = this.article.id
+    tmpComment.author_id = this.article.author_id
+    tmpComment.author_name = this.LOGONUSER.name
+    let revised = prompt("Edit your comment", "")
+    console.log(revised)
+    if(revised==="" || revised === null)  return
+    tmpComment.content = revised
+    
+    this.blogdataService.updateComment(tmpComment).subscribe(a=>a);
+    
+    this.getComments()
+  }
 }
 

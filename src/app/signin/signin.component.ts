@@ -23,7 +23,7 @@ export class SigninComponent implements OnInit {
   	var pawd = (<HTMLInputElement>document.getElementById("pw-input")).value;
     //console.log(email);
 	  //console.log(pawd);
-    var flag = email==="swpp@snu.ac.kr" && pawd ==="iluvswpp" ? true : false;
+    //var flag = email==="swpp@snu.ac.kr" && pawd ==="iluvswpp" ? true : false;
     //this.blogdataservice.getUsers().subscribe(a => (this.user = a.find(b => b.email === email && b.password === pawd )))
     this.user = this.users.find(a => a.email === email && a.password === pawd )
     

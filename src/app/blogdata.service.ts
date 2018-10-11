@@ -24,17 +24,26 @@ export class BlogdataService {
   private currentloginuser : User  = null
   private newArticles : Article[]
   private newComments : Comment[]
+  private numArticles :number
+  private numComments :number
   constructor(private http: HttpClient, private messageService: MessageService) { 
     this.getArticles().subscribe(a => this.newArticles = (a.filter(elem => this.authorName(elem))))
     this.getComments().subscribe(a => this.newComments = (a.filter(elem => this.authorName(elem))))
   }
-  
+  getNumArticles() :number {
+    return this.numArticles
+  }
+  getNumComments() :number {
+    return this.numComments
+  }
   getNewArticles(): Article[]{
     this.getArticles().subscribe(a => this.newArticles = (a.filter(elem => this.authorName(elem))))
+    this.numArticles = this.newArticles.length
     return this.newArticles;
   }
   getNewComments(): Comment[]{
     this.getComments().subscribe(a => this.newComments = (a.filter(elem => this.authorName(elem))))
+    this.numComments = this.newComments.length
     return this.newComments;
   }
   authorName(art: Article | Comment): boolean{
@@ -141,6 +150,7 @@ export class BlogdataService {
   }
 
   addComment (comment: Comment): Observable<Comment> {
+    this.numComments += 1
     return this.http.post<Comment>(this.commentsUrl, comment, httpOptions).pipe(
       tap((comment: Comment) => this.log(`added comment w/ id=${comment.id}`)),
       catchError(this.handleError<Comment>('addComment'))
@@ -165,7 +175,7 @@ export class BlogdataService {
 
 
   updateComment (comment: Comment): Observable<any> {
-    return this.http.put(this.commentsidUrl, comment, httpOptions).pipe(
+    return this.http.put(this.commentsUrl+"/"+comment.id, comment, httpOptions).pipe(
       tap(_ => this.log(`updated comment id=${comment.id}`)),
       catchError(this.handleError<any>('update comment'))
     );
