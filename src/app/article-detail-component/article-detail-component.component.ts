@@ -112,6 +112,22 @@ export class ArticleDetailComponentComponent implements OnInit {
     this.blogdataService.deleteComment(tmpComment.id).subscribe(a=>a);
     
     this.getComments()
+  }/////******** */
+  deleteArticle(comment :  Comment): void{
+    let tmpComment :Comment = new Comment()
+    console.log(comment)
+    tmpComment.id = comment.id
+    tmpComment.article_id = this.article.id
+    tmpComment.author_id = this.article.author_id
+    tmpComment.author_name = this.LOGONUSER.name
+    //let revised = prompt("Edit your comment")
+    //console.log(revised)
+    //if(revised === null)  return
+    //tmpComment.content = revised
+    
+    this.blogdataService.deleteComment(tmpComment.id).subscribe(a=>a);
+    
+    this.getComments()
   }
 }
 

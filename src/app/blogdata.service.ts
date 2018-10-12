@@ -179,7 +179,7 @@ export class BlogdataService {
   }
   
   updateArticle (article: Article): Observable<any> {
-    return this.http.put(this.articlesidUrl, article, httpOptions).pipe(
+    return this.http.put(this.articlesUrl+"/"+article.id, article, httpOptions).pipe(
       tap(_ => this.log(`updated article id=${article.id}`)),
       catchError(this.handleError<any>('update article'))
     );

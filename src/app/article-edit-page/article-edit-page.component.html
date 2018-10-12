@@ -1,8 +1,15 @@
 <button id ="signout-button" routerLink="/" (click)="out()">Signout</button><br>
-  <input id="article-title-input"><br>
-<input id="article-content-input"><br>
-<button id ="back-edit-article-button" routerLink = "..">back</button><br>
-<button id ="confirm-edit-article-button" routerLink = ".."></button><br>
-<button id ="preview-tab-button"></button><br>
-<button id ="write-tab-button"></button><br>
-<br>
+  <!-- flag = false : write tab/ flag = true : preview tab -->
+<button id ="preview-tab-button" (click) = "Ptoggle()">Preview</button>
+<button id ="write-tab-button" (click) = "Wtoggle()">Tab</button><br><br>
+<div *ngIf="flag===true">
+  <h1  id="article-author" >Author:{{writingUser.name}} </h1><br>
+  <h1  id="article-title" >Title: {{titl}}</h1><br>
+  <p  id="article-content">Content: {{cont}}</p>
+</div><br><br>
+<div *ngIf="flag===false">Title: <input id="article-title-input" [(ngModel)]="titl"><br>
+    Content: <textarea id="article-content-input" [(ngModel)]= "cont"></textarea><br>
+</div>
+<button id ="confirm-edit-article-button" routerLink = ".." (click) = "confirmButton()" >confirm</button>
+<button id ="back-edit-article-button" (click)="backEdit()"> back</button><br><br>
+
