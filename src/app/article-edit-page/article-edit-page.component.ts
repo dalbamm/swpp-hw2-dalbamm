@@ -61,8 +61,8 @@ export class ArticleEditPageComponent implements OnInit {
     */
   }
   confirmButton(){
-    this.titl = (<HTMLInputElement>document.getElementById("article-title-input")).value
-    this.cont = (<HTMLTextAreaElement> document.getElementById("article-content-input")).value
+    //this.titl = (<HTMLInputElement>document.getElementById("article-title-input")).value
+    //this.cont = (<HTMLTextAreaElement> document.getElementById("article-content-input")).value
     console.log("title: "+this.titl)
     console.log("content: "+this.cont)
     if(this.titl === "" || this.cont === "")  return

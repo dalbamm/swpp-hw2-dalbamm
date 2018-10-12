@@ -44,7 +44,7 @@ export class ArticleDetailComponentComponent implements OnInit {
   const id = +this.route.snapshot.paramMap.get('id');
   /*this.blogdataService.getNewArticles
   of(this.blogdataService.getNewArticles()).subscribe(a =>this.article =  a.find(ele => ele.id === id));*/
-  this.blogdataService.getArticle(id).subscribe(elem => this.article = (this.blogdataService.authorName(elem)? elem: elem) 
+  this.blogdataService.getArticle(id).subscribe(elem => this.article = (this.blogdataService.authorName(elem)? elem: elem) )
 
   
   //this.blogdataService.getArticle(id).subscribe(article => this.article = article);
@@ -65,7 +65,7 @@ export class ArticleDetailComponentComponent implements OnInit {
     let tmpComment :Comment = new Comment()
     tmpComment.id = this.numComments
     tmpComment.article_id = this.article.id
-    tmpComment.author_id = this.article.author_id
+    tmpComment.author_id = this.LOGONUSER.id
     tmpComment.content = this.newCommentContent
     tmpComment.author_name = this.LOGONUSER.name
     
@@ -85,9 +85,9 @@ export class ArticleDetailComponentComponent implements OnInit {
     let tmpComment :Comment = new Comment()
     console.log(comment)
     tmpComment.id = comment.id
-    tmpComment.article_id = this.article.id
-    tmpComment.author_id = this.article.author_id
-    tmpComment.author_name = this.LOGONUSER.name
+    tmpComment.article_id = comment.article_id
+    tmpComment.author_id = comment.author_id
+    tmpComment.author_name = comment.author_name
     let revised = prompt("Edit your comment")
     console.log(revised)
     if(revised === null)  return
