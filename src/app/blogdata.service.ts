@@ -26,6 +26,7 @@ export class BlogdataService {
   private newComments : Comment[]
   private numArticles :number
   private numComments :number
+  public recentlyCreated : number = -1
   constructor(private http: HttpClient, private messageService: MessageService) { 
     this.getArticles().subscribe(a => this.newArticles = (a.filter(elem => this.authorName(elem))))
     this.getComments().subscribe(a => this.newComments = (a.filter(elem => this.authorName(elem))))

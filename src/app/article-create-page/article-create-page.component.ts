@@ -3,6 +3,7 @@ import { Article } from'../Article'
 import { User } from'../User'
 import { BlogdataService } from'../blogdata.service'
 import { RouterModule, Routes, Router } from '@angular/router';
+import { ArticlesPageComponent } from '../articles-page/articles-page.component';
 
 @Component({
   selector: 'app-article-create-page',
@@ -17,12 +18,14 @@ export class ArticleCreatePageComponent implements OnInit {
   cont: string
   titleInput = (<HTMLInputElement>document.getElementById("article-title-input"))
   contentArea = (<HTMLTextAreaElement> document.getElementById("article-content-input"))
+  articlenum: number
+  articleArray: Article[]
   constructor(private blogdataService: BlogdataService,
     private router: Router) { }
   ngOnInit() {
     if(this.blogdataService.getLoginUser() === null)  this.router.navigateByUrl("/")
     this.writingUser = this.blogdataService.getLoginUser()
-    
+    this.blogdataService.getArticles().subscribe(a => this.articleArray = a)
   }
   out(){
     console.log("outbutton")
@@ -45,6 +48,19 @@ export class ArticleCreatePageComponent implements OnInit {
     this.cont = (<HTMLTextAreaElement> document.getElementById("article-content-input")).value
     console.log("title: "+this.titl)
     console.log("content: "+this.cont)
+    if(this.titl === "" || this.cont === "")  return
+    this.newArticle.author_id=this.writingUser.id
+    this.newArticle.author_name=this.writingUser.name
+    this.newArticle.title=this.titl
+    this.newArticle.content=this.cont
+    this.newArticle.id=this.articleArray[this.articleArray.length-1].id+1
+    console.log(this.newArticle)
+  
+    this.blogdataService.addArticle(this.newArticle).subscribe(a=>console.log(a))
+    this.blogdataService.recentlyCreated = this.newArticle.id
+    this.blogdataService.getArticles().subscribe()
+    this.router.navigateByUrl("/articles/"+this.newArticle.id)
+    //console.log(this.newArticle)
     
   }
   Wtoggle() {

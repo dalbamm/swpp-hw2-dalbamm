@@ -24,8 +24,14 @@ export class ArticlesPageComponent implements OnInit {
     //this.getAll();
     if(this.blogdataService.getLoginUser() === null)  this.router.navigateByUrl("/")
     //this.getArticles();
+    this.getArticles()
     this.getUsers();
-    this.articles = this.blogdataService.getNewArticles();
+    //this.articles = this.blogdataService.getNewArticles();
+/*    let t = this.blogdataService.recentlyCreated
+    if( t !== -1) {
+      this.blogdataService.recentlyCreated = -1
+      this.router.navigateByUrl("/articles/"+t)
+    }*/
     this.showSignin = this.router.url !=="/"
 
   }
@@ -46,10 +52,10 @@ export class ArticlesPageComponent implements OnInit {
   }
 
   getArticles(): void{
-	  
-   this.blogdataService.getArticles().subscribe(articles => this.articles = articles,
+    this.blogdataService.getArticles().subscribe(a=>this.articles =(
+      a.filter(elem => this.blogdataService.authorName(elem)))) 
+ 
 		   
-		   );
 //   this.blogdataService.getArticles().subscribe(this.myObserver);
   }
   getArticleAuthor(): void{

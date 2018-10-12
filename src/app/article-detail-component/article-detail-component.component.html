@@ -1,3 +1,4 @@
+<body *ngIf="article !== undefined">
 <button id ="signout-button" routerLink="/" (click)="out()">Signout</button><br>
   
 <h1 id="article-author">author: {{article?.author_name}}</h1><br>
@@ -18,3 +19,4 @@ Comment:
   <button *ngIf = "LOGONUSER.id===comment?.author_id" id="edit-comment-button" (click)="editComment(comment)">edit comment</button><button *ngIf = "LOGONUSER.id===comment?.author_id" id="delete-comment-button" (click)="deleteComment(comment)">delete comment</button><br>
     </li>
   </ul>
+</body>
