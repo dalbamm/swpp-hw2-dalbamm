@@ -5,7 +5,7 @@
 <h1 id="article-title">title: {{article?.title}}</h1><br>
 <p id="article-content">content: {{article?.content}}</p>
 <button *ngIf = "LOGONUSER?.id===article?.author_id" id="edit-article-button" routerLink = "/articles/{{article?.id}}/edit">edit article</button>
-<button *ngIf = "LOGONUSER?.id===article?.author_id" id="delete-article-button" routerLink = "/articles/">delete article</button><br><br>
+<button *ngIf = "LOGONUSER?.id===article?.author_id" id="delete-article-button" (click)="deleteArticle(article)">delete article</button><br><br>
 
 Comment: 
 <input [(ngModel)] = "newCommentContent" id="new-comment-content-input">
