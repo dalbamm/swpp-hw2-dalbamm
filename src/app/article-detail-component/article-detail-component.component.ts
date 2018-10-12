@@ -44,7 +44,7 @@ export class ArticleDetailComponentComponent implements OnInit {
   const id = +this.route.snapshot.paramMap.get('id');
   /*this.blogdataService.getNewArticles
   of(this.blogdataService.getNewArticles()).subscribe(a =>this.article =  a.find(ele => ele.id === id));*/
-  this.blogdataService.getArticle(id).subscribe(elem => this.blogdataService.authorName(this.article = elem)) 
+  this.blogdataService.getArticle(id).subscribe(elem => this.article = (this.blogdataService.authorName(elem)? elem: elem) 
 
   
   //this.blogdataService.getArticle(id).subscribe(article => this.article = article);

@@ -30,9 +30,9 @@ export class ArticleEditPageComponent implements OnInit {
   ngOnInit() {
     if(this.blogdataService.getLoginUser() === null)  this.router.navigateByUrl("/")
     this.writingUser = this.blogdataService.getLoginUser()
-    this.blogdataService.getArticle(this.id).subscribe(a=> (this.nowArticle=a)&&
-    (this.getdata(a)&&this.getdata_b(a)&&this.blogdataService.authorName(a)))
-    
+    this.blogdataService.getArticle(this.id).subscribe(a=> (this.nowArticle=
+    (this.getdata(a)&&this.getdata_b(a)&&this.blogdataService.authorName(a))?a:a)
+    )
   }
   out(){
     console.log("outbutton")
@@ -66,7 +66,7 @@ export class ArticleEditPageComponent implements OnInit {
     console.log("title: "+this.titl)
     console.log("content: "+this.cont)
     if(this.titl === "" || this.cont === "")  return
-    this.newArticle.author_id=this.nowArticle.id
+    this.newArticle.author_id=this.nowArticle.author_id
     this.newArticle.author_name=this.nowArticle.author_name
     this.newArticle.title=this.titl
     this.newArticle.content=this.cont
