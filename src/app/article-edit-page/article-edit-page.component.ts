@@ -20,4 +20,8 @@ export class ArticleEditPageComponent implements OnInit {
   	
   }
 
+  out(){
+    console.log("outbutton")
+    this.blogdataService.setLogout()
+  }
 }

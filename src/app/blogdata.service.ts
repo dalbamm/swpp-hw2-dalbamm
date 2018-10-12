@@ -34,17 +34,27 @@ export class BlogdataService {
     return this.numArticles
   }
   getNumComments() :number {
+    console.log("get: "+ this.numComments)
     return this.numComments
+  }
+  setNumArticles(newnum: number)  {
+    this.numArticles =newnum
+  }
+  setNumComments(newnum :number) {
+    console.log("set: "+ newnum)
+    this.numComments = newnum
+    console.log("set2: "+ this.numComments)
+
   }
   getNewArticles(): Article[]{
     this.getArticles().subscribe(a => this.newArticles = (a.filter(elem => this.authorName(elem))))
-    this.numArticles = this.newArticles.length
+    //this.numArticles = this.newArticles.length
     return this.newArticles;
   }
   getNewComments(): Comment[]{
     this.getComments().subscribe(a => this.newComments = (a.filter(elem => this.authorName(elem))))
-    this.numComments = this.newComments.length
-    return this.newComments;
+    //this.numComments = this.newComments.length
+    return this.newComments.copyWithin(0,0);
   }
   authorName(art: Article | Comment): boolean{
      this.getUsers().subscribe(a => (art.author_name = (a.find(b => b.id === art.author_id).name)));
@@ -150,7 +160,8 @@ export class BlogdataService {
   }
 
   addComment (comment: Comment): Observable<Comment> {
-    this.numComments += 1
+    console.log(this.commentsUrl)
+    console.log(comment.id)
     return this.http.post<Comment>(this.commentsUrl, comment, httpOptions).pipe(
       tap((comment: Comment) => this.log(`added comment w/ id=${comment.id}`)),
       catchError(this.handleError<Comment>('addComment'))
@@ -175,6 +186,7 @@ export class BlogdataService {
 
 
   updateComment (comment: Comment): Observable<any> {
+    
     return this.http.put(this.commentsUrl+"/"+comment.id, comment, httpOptions).pipe(
       tap(_ => this.log(`updated comment id=${comment.id}`)),
       catchError(this.handleError<any>('update comment'))

@@ -11,7 +11,8 @@ import { RouterModule, Routes, Router } from '@angular/router';
 })
 export class ArticlesPageComponent implements OnInit {
 	articles: Article[]
-	users: User[]
+  users: User[]
+  showSignin: boolean
 	myObserver = {
 		next:x =>console.log('observer got a next value: '+ x )
 	};
@@ -25,8 +26,13 @@ export class ArticlesPageComponent implements OnInit {
     //this.getArticles();
     this.getUsers();
     this.articles = this.blogdataService.getNewArticles();
+    this.showSignin = this.router.url !=="/"
+
   }
-  
+  out(){
+    console.log("outbutton")
+    this.blogdataService.setLogout()
+  }
   newarticlebut(){
   	console.log("hello~!")
   }
