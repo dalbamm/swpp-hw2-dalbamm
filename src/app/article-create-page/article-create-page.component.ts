@@ -39,7 +39,6 @@ export class ArticleCreatePageComponent implements OnInit {
     titlE.innerHTML= this.titl
     contE.innerHTML= this.cont
     */
-    authE.hidden = true
   }
   confirmButton(){
     this.titl = (<HTMLInputElement>document.getElementById("article-title-input")).value

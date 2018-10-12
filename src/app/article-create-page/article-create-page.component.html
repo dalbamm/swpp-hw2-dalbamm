@@ -2,11 +2,11 @@
   <!-- flag = false : write tab/ flag = true : preview tab -->
 <button id ="preview-tab-button" (click) = "Ptoggle()">Preview</button>
 <button id ="write-tab-button" (click) = "Wtoggle()">Tab</button><br><br>
-
-<h1 hidden="false" id="article-author">author: </h1><br>
-<h1  id="article-title">title: </h1><br>
-<p  id="article-content">content: </p>
-
+<div *ngIf="flag===true">
+  <h1  id="article-author" >Author:{{writingUser.name}} </h1><br>
+  <h1  id="article-title" >Title: {{titl}}</h1><br>
+  <p  id="article-content">Content: {{cont}}</p>
+</div><br><br>
 <div *ngIf="flag===false">Title: <input id="article-title-input" [(ngModel)]="titl"><br>
     Content: <textarea id="article-content-input" [(ngModel)]= "cont"></textarea><br>
 </div>
